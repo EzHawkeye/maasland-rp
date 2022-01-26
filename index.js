@@ -27,7 +27,7 @@ const setup = require('./setup.js');
 const { start } = require('./bot.js');
 const Discord = require('discord.js');
 const bot = new Discord.Client();
-module.exports = { client };
+module.exports = { bot };
 
 const printValues = function(values, text) {
   console.log(text ? text : 'Current values:');
