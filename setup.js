@@ -55,6 +55,18 @@ const TEMPLATE = {
 };
 const SAVE_FILE = './config.json';
 
+function loadValue(key) {
+  return new Promise((resolve, reject) => {
+    const io = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout
+    });
+    io.question(`Please enter a value for '${key}'${TEMPLATE[key].required ? '' : ` (Not required defaults to '${TEMPLATE[key].default}')`}\n  ${TEMPLATE[key].message}\n> `, (value) => {
+      io.close();
+      resolve(value);
+    });
+  })
+}
 
 exports.createValues = function(keys) {
   return new Promise((resolve,reject) => {
