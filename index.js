@@ -26,7 +26,7 @@ Set environment variables as described below:
 const setup = require('./setup.js');
 const { start } = require('./bot.js');
 const Discord = require('discord.js');
-const client = new Discord.Client();
+const bot = new Discord.Client();
 module.exports = { client };
 
 const printValues = function(values, text) {
@@ -86,4 +86,4 @@ if (process.argv.includes('-c') || process.argv.includes('--config')) {
   })
 }
 
-client.login(process.env.TOKEN);
+bot.login(process.env.TOKEN);
