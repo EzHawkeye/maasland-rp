@@ -38,19 +38,19 @@ const TEMPLATE = {
   },
   'SUGGESTION_CHANNEL': {
     'message': 'Channel that will create suggestion embeds in',
-    'required': true,
+    'required': false,
   },
   'BUG_CHANNEL': {
     'message': 'Channel that will recieve bug reports',
-    'required': true
+    'required': false
   },
   'BUG_LOG_CHANNEL': {
     'message': 'Channel that will log bug reports',
-    'required': true,
+    'required': false,
   },
   'LOG_CHANNEL': {
     'message': 'Channel that will log status changes',
-    'required': true,
+    'required': false,
   },
 };
 const SAVE_FILE = './config.json';
