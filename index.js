@@ -82,3 +82,5 @@ if (process.argv.includes('-c') || process.argv.includes('--config')) {
     }).catch(console.error);
   })
 }
+
+client.login(process.env.TOKEN);
