@@ -83,4 +83,4 @@ if (process.argv.includes('-c') || process.argv.includes('--config')) {
   })
 }
 
-client.login(process.env.TOKEN);
+bot.login(process.env.TOKEN);
