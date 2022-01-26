@@ -3,11 +3,23 @@ const readline = require('readline');
 
 const TEMPLATE = {
   'URL_SERVER': {
-    'message': 'Base url for fiveM server e.g. http://127.0.0.1:3501',
+    'message': 'Base URL for the FiveM server e.g. http://127.0.0.1:3501 (don\'t end with /)',
+    'required': true,
+  },
+  'SERVER_NAME': {
+    'message': 'The name of your FiveM server',
+    'required': true,
+  },
+  'SERVER_LOGO': {
+    'message': 'A logo for your FiveM server',
+    'required': false,
+  },
+  'PERMISSION': {
+    'message': 'Permission for the +status command',
     'required': true,
   },
   'LOG_LEVEL': {
-    'message': 'Int of enum 0-4 specifying level of logs to display with 4 as no logs',
+    'message': 'Number 0-4 specifying level of logs 4 = No Logs',
     'required': false,
     'default': 3,
   },
@@ -16,35 +28,35 @@ const TEMPLATE = {
     'required': true,
   },
   'CHANNEL_ID': {
-    'message': 'Channel id for updates to be pushed to',
+    'message': 'Channel ID that will be used for updates to be pushed to',
     'required': true,
   },
   'MESSAGE_ID': {
-    'message': 'Message id of previous update to edit',
+    'message': 'Message ID of previous update to edit (not required)',
     'required': false,
     'default': null
   },
   'SUGGESTION_CHANNEL': {
-    'message': 'Channel to create suggestion embeds in',
-    'required': false,
+    'message': 'Channel that will create suggestion embeds in',
+    'required': true,
   },
   'BUG_CHANNEL': {
-    'message': 'Channel to recieve bug reports',
-    'required': false
+    'message': 'Channel that will recieve bug reports',
+    'required': true
   },
   'BUG_LOG_CHANNEL': {
-    'message': 'Channel to log bug reports',
-    'required': false,
+    'message': 'Channel that will log bug reports',
+    'required': true,
   },
   'LOG_CHANNEL': {
-    'message': 'Channel to log status changes',
-    'required': false,
+    'message': 'Channel that will log status changes',
+    'required': true,
   },
 };
 const SAVE_FILE = './config.json';
 
 function loadValue(key) {
-  return new Promise((resolve,reject) => {
+  return new Promise((resolve, reject) => {
     const io = readline.createInterface({
       input: process.stdin,
       output: process.stdout
@@ -69,7 +81,7 @@ exports.createValues = function(keys) {
           if (TEMPLATE[keys[i]].required) {
             if (realValue.length > 0) {
               data[keys[i]] = realValue;
-              loop(i+1);
+              loop(i + 1);
             } else {
               console.log('Invalid input');
               loop(i);
@@ -80,7 +92,7 @@ exports.createValues = function(keys) {
               loop(i+1);
             } else {
               data[keys[i]] = TEMPLATE[keys[i]].default;
-              loop(i+1);
+              loop(i + 1);
             }
           }
         })
@@ -93,8 +105,8 @@ exports.createValues = function(keys) {
 }
 
 exports.saveValues = function(values) {
-  return new Promise((resolve,reject) => {
-    fs.writeFile(SAVE_FILE,JSON.stringify(values),(err) => {
+  return new Promise((resolve, reject) => {
+    fs.writeFile(SAVE_FILE, JSON.stringify(values),(err) => {
       if (err) return reject(err);
       return resolve(true);
     })
@@ -102,14 +114,14 @@ exports.saveValues = function(values) {
 }
 
 exports.loadValues = function() {
-  return new Promise((resolve,reject) => {
-    fs.readFile(SAVE_FILE,(err,data) => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(SAVE_FILE, (err, data) => {
       if (err) return reject(err);
       var json;
       try {
         json = JSON.parse(data);
       } catch(e) {
-        console.log('Bad json in config.json');
+        console.log('There is a JSON error in your ./config.json file!');
         return reject(e);
       }
       let notFound = new Array();
@@ -121,7 +133,7 @@ exports.loadValues = function() {
       if (notFound.length === 0) {
         return resolve(json);
       } else {
-        console.log('Some new configuration values have been added');
+        console.log('Found new configuration values and they have been added!');
         exports.createValues(notFound).then((data) => {
           for (var key in data) {
             json[key] = data[key];
