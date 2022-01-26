@@ -25,6 +25,7 @@ Set environment variables as described below:
 
 const setup = require('./setup.js');
 const { start } = require('./bot.js');
+module.exports = { client };
 
 const printValues = function(values, text) {
   console.log(text ? text : 'Current values:');
@@ -83,4 +84,4 @@ if (process.argv.includes('-c') || process.argv.includes('--config')) {
   })
 }
 
-bot.login(process.env.TOKEN);
+client.login(process.env.TOKEN);
