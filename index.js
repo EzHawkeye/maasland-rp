@@ -25,6 +25,7 @@ Set environment variables as described below:
 
 const setup = require('./setup.js');
 const { start } = require('./bot.js');
+const client = new discord.Client();
 module.exports = { client };
 
 const printValues = function(values, text) {
